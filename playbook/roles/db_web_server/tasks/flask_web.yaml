@@ -16,7 +16,7 @@
   become_user: root
   ansible.builtin.git:
     repo: https://github.com/mmumshad/simple-webapp.git
-    dest: /opt/app
+    dest: /opt/app/TESTETART
     version: master
 
   # - name: Copy source code
