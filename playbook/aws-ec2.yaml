@@ -13,5 +13,4 @@
          group: all-allow
          wait: yes
          region: eu-central-1
-         instance_tags:
-           Env: db_and_web
+
