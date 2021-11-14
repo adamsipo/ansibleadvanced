@@ -4,5 +4,5 @@
   hosts: webserver,dbserver
   roles:
     - python
-    - flask_web
     - sql_server
+    - flask_web
