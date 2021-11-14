@@ -17,6 +17,15 @@
            Name: webserver1
            Env: web
        register: ec2
+       
+- name: Add new instance to host group
+  add_host:
+    hostname: "{{ item.public_ip }}"   
+    ansible_host: "{{ item.public_ip }}"   
+    groups: webserver  #Group name where instance will belong
+    ansible_ssh_private_key_file: '/home/osboxes/.ssh/ansible.pem'
+    ansible_ssh_user: ec2-user   #User name that will be used while connecting
+  loop: "{{ ec2.instances }}"   #Loop to add all the newly created instances
 
  - name: WEB AWS EC2 Instance
    hosts: localhost
@@ -37,6 +46,15 @@
            Env: web
        register: ec2
 
+- name: Add new instance to host group
+  add_host:
+    hostname: "{{ item.public_ip }}"   
+    ansible_host: "{{ item.public_ip }}"   
+    groups: webserver  #Group name where instance will belong
+    ansible_ssh_private_key_file: '/home/osboxes/.ssh/ansible.pem'
+    ansible_ssh_user: ec2-user   #User name that will be used while connecting
+  loop: "{{ ec2.instances }}"   #Loop to add all the newly created instances
+
  - name: DB AWS EC2 Instance
    hosts: localhost
    connection: local
@@ -55,6 +73,15 @@
            Name: dbserver1
            Env: db
        register: ec2
+
+- name: Add new instance to host group
+  add_host:
+    hostname: "{{ item.public_ip }}"   
+    ansible_host: "{{ item.public_ip }}"   
+    groups: dbserver  #Group name where instance will belong
+    ansible_ssh_private_key_file: '/home/osboxes/.ssh/ansible.pem'
+    ansible_ssh_user: ec2-user   #User name that will be used while connecting
+  loop: "{{ ec2.instances }}"   #Loop to add all the newly created instances
 
   # - name: Add new instance to host group
   #   add_host:
