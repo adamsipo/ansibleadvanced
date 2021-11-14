@@ -4,11 +4,7 @@
   hosts: webserver,dbserver
   gather_facts: false
   roles:
-    - {role: db_web_server, tags: ['python'],   db_web_server: python }
-    - {role: db_web_server, tags: ['sql'],   db_web_server: sql_server }
-    - {role: db_web_server, tags: ['web'],   db_web_server: flask_web }
-
-# - name: Deploy web
-#   hosts: webserver,dbserver
-#   roles:
+    - {role: db_web_server, tags: ['python'],db_web_server: python }
+    - {role: db_web_server, tags: ['sql'],db_web_server: sql_server }
+    - {role: db_web_server, tags: ['web'],db_web_server: flask_web }
 
