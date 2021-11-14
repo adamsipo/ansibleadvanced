@@ -32,7 +32,7 @@
           host: "{{ item.public_ip }}" 
           port: 22 
           state: started
-        with_items: ec2.instances
+        with_items: "{{ ec2.instances }}"
 
       - name: Create ec2 instance
         ec2:
@@ -62,7 +62,7 @@
           host: "{{ item.public_ip }}" 
           port: 22 
           state: started
-        with_items: ec2.instances
+        with_items: "{{ ec2.instances }}"
 
       - name: Create ec2 DB instance
         ec2:
@@ -92,4 +92,4 @@
           host: "{{ item.public_ip }}" 
           port: 22 
           state: started
-        with_items: ec2.instances
+        with_items: "{{ ec2.instances }}"
