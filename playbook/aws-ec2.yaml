@@ -19,9 +19,10 @@
   hosts: localhost
   tasks:
   - ec2:
-      key_name: mykey
+      key_name: ansible
       instance_type: t2.micro
       image: ami-123456
+      region: eu-central-1
       wait: yes
       group: webserver
       count: 3
