@@ -28,6 +28,8 @@
       count: 3
       vpc_subnet_id: subnet-29e63245
       assign_public_ip: yes
+      aws_access_key: "{{ aws_access_key }}"
+      aws_secret_key: "{{ aws_secret_key }}"
 
 # - name: Ansible test
 #   hosts: localhost
