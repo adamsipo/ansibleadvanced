@@ -14,5 +14,4 @@
          wait: yes
          region: eu-central-1
          instance_tags:
-           Name: server1
            Env: db_and_web
