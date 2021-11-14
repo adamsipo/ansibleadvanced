@@ -18,26 +18,28 @@
             Env: web
         register: ec2
 
-      - name: add host to group 'just_created' with variable foo=42
+      - name: Add new instance to host group
         add_host:
-          name: "{{ ip_from_ec2 }}"
-          groups: just_created
-          foo: 42
-  # - name: Create SSH Group to login dynamically to EC2 Instance
-  #   add_host: 
-  #     hostname: "{{ item.public_ip }}"
-  #     ansible_ssh_private_key_file: path/to/test-pair.pem
-  #     groupname: ec2_server
-  #   with_items: ec2.instances
+          hostname: "{{ item.public_ip }}"   
+          ansible_host: "{{ item.public_ip }}"   
+          groups: webserver  #Group name where instance will belong
+          ansible_ssh_private_key_file: '/home/osboxes/.ssh/ansible.pem'
+          ansible_ssh_user: ec2-user   #User name that will be used while connecting
+        loop: "{{ ec2.instances }}"   #Loop to add all the newly created instances      
 
-  # - name: Add new instance to host group
-  #   add_host:
-  #     hostname: "{{ item.public_ip }}"   
-  #     ansible_host: "{{ item.public_ip }}"   
-  #     groups: webserver  #Group name where instance will belong
-  #     ansible_ssh_private_key_file: '/home/osboxes/.ssh/ansible.pem'
-  #     ansible_ssh_user: ec2-user   #User name that will be used while connecting
-  #   loop: "{{ ec2.instances }}"   #Loop to add all the newly created instances
+      # - name: add host to group 'just_created' with variable foo=42
+      #   add_host:
+      #     name: "{{ ip_from_ec2 }}"
+      #     groups: just_created
+      #     foo: 42
+      # - name: Create SSH Group to login dynamically to EC2 Instance
+      #   add_host: 
+      #     hostname: "{{ item.public_ip }}"
+      #     ansible_ssh_private_key_file: path/to/test-pair.pem
+      #     groupname: ec2_server
+      #   with_items: ec2.instances
+
+
 
 #  - name: WEB AWS EC2 Instance
 #    hosts: localhost
