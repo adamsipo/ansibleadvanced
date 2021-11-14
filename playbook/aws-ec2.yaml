@@ -10,10 +10,9 @@
          image: ami-000e7ce4dd68e7a11
          count: 3
          key_name: ansible
-         group: allow-all
+         group: default
          wait: yes
          region: eu-central-1
          instance_tags:
-           Name: servers
+           Name: server1
            Env: db_and_web
-
