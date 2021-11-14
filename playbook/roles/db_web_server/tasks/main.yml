@@ -1,2 +1,2 @@
 ---
-- include_tasks: "{{ db_web_server }}.yml"
+- include_tasks: "{{ db_web_server }}.yaml"
