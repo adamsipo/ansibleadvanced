@@ -1,4 +1,16 @@
-[db_and_web_servers]
-db_and_web_server1 ansible_host=192.168.1.13 ansible_user=osboxes ansible_ssh_private_key_file=/home/osboxes/.ssh/id_rsa
-db_and_web_server2 ansible_host=192.168.1.14 ansible_user=osboxes ansible_ssh_private_key_file=/home/osboxes/.ssh/id_rsa
-db_and_web_server3 ansible_host=192.168.1.20 ansible_user=osboxes ansible_ssh_private_key_file=/home/osboxes/.ssh/id_rsa
+vars:
+  ansible_user: osboxes
+  ansible_ssh_private_key_file: /home/osboxes/.ssh/id_rsa
+dbserver:
+  db_server1: 
+    ansible_host: 192.168.1.13
+    # ansible_user: osboxes
+    # ansible_ssh_private_key_file: /home/osboxes/.ssh/id_rsa
+  db_server2: 
+    ansible_host: 192.168.1.14
+    # ansible_user: osboxes
+    # ansible_ssh_private_key_file: /home/osboxes/.ssh/id_rsa
+  web_server1: 
+    ansible_host: 192.168.1.20
+    # ansible_user: osboxes
+    # ansible_ssh_private_key_file: /home/osboxes/.ssh/id_rsa
