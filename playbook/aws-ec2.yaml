@@ -1,5 +1,5 @@
 ---
- - name: Working with AWS EC2 Instance
+ - name: WEB AWS EC2 Instance
    hosts: localhost
    connection: local
    gather_facts: false
@@ -8,9 +8,49 @@
        ec2:
          instance_type: t2.micro
          image: ami-06ec8443c2a35b0ba
-         count: 3
+         count: 1
          key_name: ansible
          group: all-allow
          wait: yes
          region: eu-central-1
+         instance_tags:
+           Name: webserver1
+           Env: web
+
+ - name: WEB AWS EC2 Instance
+   hosts: localhost
+   connection: local
+   gather_facts: false
+   tasks:
+     - name: Create ec2 instance
+       ec2:
+         instance_type: t2.micro
+         image: ami-06ec8443c2a35b0ba
+         count: 1
+         key_name: ansible
+         group: all-allow
+         wait: yes
+         region: eu-central-1         
+         instance_tags:
+           Name: webserver2
+           Env: web
+
+ - name: DB AWS EC2 Instance
+   hosts: localhost
+   connection: local
+   gather_facts: false
+   tasks:
+     - name: Create ec2 DB instance
+       ec2:
+         instance_type: t2.micro
+         image: ami-06ec8443c2a35b0ba
+         count: 1
+         key_name: ansible
+         group: all-allow
+         wait: yes
+         region: eu-central-1
+         instance_tags:
+           Name: dbserver1
+           Env: web
+
 
