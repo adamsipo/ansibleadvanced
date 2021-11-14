@@ -7,10 +7,10 @@
      - name: Create ec2 instance
        ec2:
          instance_type: t2.micro
-         image: ami-000e7ce4dd68e7a11
+         image: ami-0dd0ccab7e2801812
          count: 3
          key_name: ansible
-         group: default
+         group: allow-all
          wait: yes
          region: eu-central-1
          instance_tags:
