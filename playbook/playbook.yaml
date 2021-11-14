@@ -8,9 +8,10 @@
 - name: Deploy web
   hosts: webserver,dbserver
   roles:
+    - sql_server
     - flask_web
 
-- name: Deploy db
-  hosts: webserver,dbserver
-  roles:
-    - sql_server
+# - name: Deploy db
+#   hosts: webserver,dbserver
+#   roles:
+
