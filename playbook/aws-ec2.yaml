@@ -40,7 +40,7 @@
          image: ami-000e7ce4dd68e7a11
          count: 1
          key_name: ssh-1
-         group: allow-all
+         group: test-ansible
          wait: yes
          region: us-east-2
          instance_tags:
