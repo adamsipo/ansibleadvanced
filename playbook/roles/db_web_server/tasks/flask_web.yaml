@@ -11,6 +11,9 @@
   #     extra_args: -q
 
 - name: Example clone of a single branch
+  become: Yes
+  become_method: sudo
+  become_user: root
   ansible.builtin.git:
     repo: https://github.com/mmumshad/simple-webapp.git
     dest: /opt/app
