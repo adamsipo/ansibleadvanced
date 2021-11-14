@@ -10,7 +10,7 @@
          image: ami-0dd0ccab7e2801812
          count: 3
          key_name: ansible
-         group: allow-all
+         group: default
          wait: yes
          region: eu-central-1
          instance_tags:
