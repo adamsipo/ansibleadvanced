@@ -1,8 +1,16 @@
 ---
 
-- name: Deploy a web application
+- name: Deploy dependency
   hosts: webserver,dbserver
   roles:
     - python
-    - sql_server
+
+- name: Deploy web
+  hosts: webserver,dbserver
+  roles:
     - flask_web
+
+- name: Deploy db
+  hosts: webserver,dbserver
+  roles:
+    - sql_server
