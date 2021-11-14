@@ -1,37 +1,44 @@
-  - name: Install python Flask dependency
-    become: Yes
-    become_method: sudo
-    become_user: root
-    pip: 
-      name: 
-        - Flask
-        - Flask-MySQL
-        - PyMySQL
-      state: present
-      extra_args: -q
+  # - name: Install python Flask dependency
+  #   become: Yes
+  #   become_method: sudo
+  #   become_user: root
+  #   pip: 
+  #     name: 
+  #       - Flask
+  #       - Flask-MySQL
+  #       - PyMySQL
+  #     state: present
+  #     extra_args: -q
 
-  - name: Copy source code
-    become: Yes
-    become_method: sudo
-    become_user: root
-    copy: 
-      src: /opt/ansible/app.py
-      dest: /opt/
-      owner: osboxes
-      group: osboxes
-      mode: '0644'
+- name: Example clone of a single branch
+  ansible.builtin.git:
+    repo: https://github.com/mmumshad/simple-webapp.git
+    dest: /opt/app
+    single_branch: yes
+    version: master
 
-  - name: Open ports 5000
-    become: Yes
-    become_method: sudo
-    become_user: root
-    shell: firewall-cmd --zone=public --permanent --add-port 5000/tcp >> log1.txt
+  # - name: Copy source code
+  #   become: Yes
+  #   become_method: sudo
+  #   become_user: root
+  #   copy: 
+  #     src: /opt/ansible/app.py
+  #     dest: /opt/
+  #     owner: osboxes
+  #     group: osboxes
+  #     mode: '0644'
 
-  - name: Open ports 5000
-    become: Yes
-    become_method: sudo
-    become_user: root
-    shell: firewall-cmd --reload >> log2.txt
+  # - name: Open ports 5000
+  #   become: Yes
+  #   become_method: sudo
+  #   become_user: root
+  #   shell: firewall-cmd --zone=public --permanent --add-port 5000/tcp >> log1.txt
 
-  - name: Start web server
-    shell: FLASK_APP=/opt/app.py nohup flask run --host=0.0.0.0 &
+  # - name: Open ports 5000
+  #   become: Yes
+  #   become_method: sudo
+  #   become_user: root
+  #   shell: firewall-cmd --reload >> log2.txt
+
+  # - name: Start web server
+  #   shell: FLASK_APP=/opt/app.py nohup flask run --host=0.0.0.0 &
