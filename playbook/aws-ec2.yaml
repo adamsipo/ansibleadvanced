@@ -39,7 +39,7 @@
          instance_type: t2.micro
          image: ami-000e7ce4dd68e7a11
          count: 1
-         key_name: ssh-1
+         key_name: ansible
          group: allow-all
          wait: yes
          region: us-east-2
