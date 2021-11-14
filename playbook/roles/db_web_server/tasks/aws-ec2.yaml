@@ -9,9 +9,9 @@
 #     assign_public_ip: yes
 
 
-# - name: Ansible test
-# hosts: localhost
-# tasks:
+- name: Ansible test
+hosts: localhost
+tasks:
   - name: launching AWS instance using Ansible
     amazon.aws.ec2:
     key_name: ansible
