@@ -39,6 +39,11 @@ aws_secret_key: !vault |
 keyed_groups:
   - key: tags
     prefix: tag
+filters:
+  tag:Env:
+    - web
+    - db
+  instance-state-name : running
 
 # regions:
 #   - eu-central-1
