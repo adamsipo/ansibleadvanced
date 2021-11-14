@@ -15,21 +15,54 @@
 #       - "@Development tools"
 #       state: installed
 
-- name: Ansible test
-  hosts: localhost
-  tasks:
-  - ec2:
-      # key_name: ansible
-      instance_type: t2.micro
-      image: ami-123456
-      region: eu-central-1
-      wait: yes
-      group: webserver
-      count: 3
-      vpc_subnet_id: subnet-29e63245
-      assign_public_ip: yes
-      aws_access_key: "{{ aws_access_key }}"
-      aws_secret_key: "{{ aws_secret_key }}"
+#  - name: Working with AWS EC2 Instance
+#    hosts: localhost
+#    connection: local
+#    gather_facts: false
+#    tasks:
+#      - name: Create ec2 instance
+#        ec2:
+#          instance_type: t2.micro
+#          image: ami-000e7ce4dd68e7a11
+#          count: 1
+#          key_name: ssh-1
+#          group: allow-all
+#          region: us-east-2
+
+ - name: Working with AWS EC2 Instance
+   hosts: localhost
+   connection: local
+   gather_facts: false
+   tasks:
+     - name: Create ec2 instance
+       ec2:
+         instance_type: t2.micro
+         image: ami-000e7ce4dd68e7a11
+         count: 1
+         key_name: ssh-1
+         group: allow-all
+         wait: yes
+         region: us-east-2
+         instance_tags:
+           Name: server4
+           Env: db
+
+
+# - name: Ansible test
+#   hosts: localhost
+#   tasks:
+#   - ec2:
+#       # key_name: ansible
+#       instance_type: t2.micro
+#       image: ami-123456
+#       region: eu-central-1
+#       wait: yes
+#       group: webserver
+#       count: 3
+#       vpc_subnet_id: subnet-29e63245
+#       assign_public_ip: yes
+#       aws_access_key: "{{ aws_access_key }}"
+#       aws_secret_key: "{{ aws_secret_key }}"
 
 # - name: Ansible test
 #   hosts: localhost
@@ -47,3 +80,4 @@
 #       assign_public_ip: yes
 #       aws_access_key: "{{ aws_access_key }}"
 #       aws_secret_key: "{{ aws_secret_key }}"
+
