@@ -15,20 +15,32 @@
 #       - "@Development tools"
 #       state: installed
 
-
 - name: Ansible test
   hosts: localhost
   tasks:
-  - name: launching AWS instance using Ansible
-    amazon.aws.ec2:
-      key_name: ansible
+  - ec2:
+      key_name: mykey
       instance_type: t2.micro
-      image: ami-030e490c34394591b
-      region: eu-central-1
+      image: ami-123456
       wait: yes
-      group: Ansible
-      count: 1
+      group: webserver
+      count: 3
       vpc_subnet_id: subnet-29e63245
       assign_public_ip: yes
-      aws_access_key: "{{ aws_access_key }}"
-      aws_secret_key: "{{ aws_secret_key }}"
+
+# - name: Ansible test
+#   hosts: localhost
+#   tasks:
+#   - name: launching AWS instance using Ansible
+#     amazon.aws.ec2:
+#       key_name: ansible
+#       instance_type: t2.micro
+#       image: ami-030e490c34394591b
+#       region: eu-central-1
+#       wait: yes
+#       group: Ansible
+#       count: 1
+#       vpc_subnet_id: subnet-29e63245
+#       assign_public_ip: yes
+#       aws_access_key: "{{ aws_access_key }}"
+#       aws_secret_key: "{{ aws_secret_key }}"
