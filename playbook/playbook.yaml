@@ -1,8 +1,8 @@
 ---
 
-  - name: Deploy a web application
-    hosts: webserver, dbserver
-    roles:
-      - python
-      - flask_web
-      - sql_server
+- name: Deploy a web application
+  hosts: webserver, dbserver
+  roles:
+    - python
+    - flask_web
+    - sql_server
