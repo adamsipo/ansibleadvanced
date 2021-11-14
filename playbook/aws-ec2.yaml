@@ -1,54 +1,69 @@
 ---
- - name: WEB AWS EC2 Instance
-   hosts: localhost
-   connection: local
-   gather_facts: false
-   tasks:
-     - name: Create ec2 instance
-       ec2:
-         instance_type: t2.micro
-         image: ami-06ec8443c2a35b0ba
-         count: 1
-         key_name: ansible
-         group: all-allow
-         wait: yes
-         region: eu-central-1
-         instance_tags:
-           Name: webserver1
-           Env: web
+#  - name: AWS EC2 Instance
+#    hosts: localhost
+#    connection: local
+#    gather_facts: false
+#    tasks:
+#      - name: Create ec2 instance
+#        ec2:
+#          instance_type: t2.micro
+#          image: ami-06ec8443c2a35b0ba
+#          count: 1
+#          key_name: ansible
+#          group: all-allow
+#          wait: yes
+#          region: eu-central-1
+#          instance_tags:
+#            Name: webserver1
+#            Env: web
+#          register: ec2
 
- - name: WEB AWS EC2 Instance
-   hosts: localhost
-   connection: local
-   gather_facts: false
-   tasks:
-     - name: Create ec2 instance
-       ec2:
-         instance_type: t2.micro
-         image: ami-06ec8443c2a35b0ba
-         count: 1
-         key_name: ansible
-         group: all-allow
-         wait: yes
-         region: eu-central-1         
-         instance_tags:
-           Name: webserver2
-           Env: web
+#  - name: WEB AWS EC2 Instance
+#    hosts: localhost
+#    connection: local
+#    gather_facts: false
+#    tasks:
+#      - name: Create ec2 instance
+#        ec2:
+#          instance_type: t2.micro
+#          image: ami-06ec8443c2a35b0ba
+#          count: 1
+#          key_name: ansible
+#          group: all-allow
+#          wait: yes
+#          region: eu-central-1         
+#          instance_tags:
+#            Name: webserver2
+#            Env: web
+#          register: ec2
 
- - name: DB AWS EC2 Instance
-   hosts: localhost
-   connection: local
-   gather_facts: false
-   tasks:
-     - name: Create ec2 DB instance
-       ec2:
-         instance_type: t2.micro
-         image: ami-06ec8443c2a35b0ba
-         count: 1
-         key_name: ansible
-         group: all-allow
-         wait: yes
-         region: eu-central-1
-         instance_tags:
-           Name: dbserver1
-           Env: web
+#  - name: DB AWS EC2 Instance
+#    hosts: localhost
+#    connection: local
+#    gather_facts: false
+#    tasks:
+#      - name: Create ec2 DB instance
+#        ec2:
+#          instance_type: t2.micro
+#          image: ami-06ec8443c2a35b0ba
+#          count: 1
+#          key_name: ansible
+#          group: all-allow
+#          wait: yes
+#          region: eu-central-1
+#          instance_tags:
+#            Name: dbserver1
+#            Env: db
+#          register: ec2
+
+  - name: Add new instance to host group
+    add_host:
+            hostname: "{{ item.public_ip }}"
+            groupname: webserver
+    loop: "{{ ec2.instances }}"
+  - name: Wait for SSH to come up
+    wait_for:
+            host: "{{ item.public_dns_name }}"
+            port: 22
+            state: started
+    loop: "{{ ec2.instances }}"
