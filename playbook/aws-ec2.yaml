@@ -18,11 +18,11 @@
             Env: web
         register: ec2
 
-  - name: add host to group 'just_created' with variable foo=42
-    add_host:
-      name: "{{ ip_from_ec2 }}"
-      groups: just_created
-      foo: 42
+      - name: add host to group 'just_created' with variable foo=42
+        add_host:
+          name: "{{ ip_from_ec2 }}"
+          groups: just_created
+          foo: 42
   # - name: Create SSH Group to login dynamically to EC2 Instance
   #   add_host: 
   #     hostname: "{{ item.public_ip }}"
