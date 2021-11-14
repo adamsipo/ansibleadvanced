@@ -10,8 +10,8 @@
 
 
 - name: Ansible test
-hosts: localhost
-tasks:
+  hosts: localhost
+  tasks:
   - name: launching AWS instance using Ansible
     amazon.aws.ec2:
     key_name: ansible
