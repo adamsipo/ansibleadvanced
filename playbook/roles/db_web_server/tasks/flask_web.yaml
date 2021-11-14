@@ -17,7 +17,6 @@
   ansible.builtin.git:
     repo: https://github.com/mmumshad/simple-webapp.git
     dest: /opt/app
-    single_branch: yes
     version: master
 
   # - name: Copy source code
