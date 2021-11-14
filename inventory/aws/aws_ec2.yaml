@@ -38,14 +38,14 @@ aws_secret_key: !vault |
           6536313638333336663630363363333736376330376463626535
 regions:
   - eu-central-1
-  - key: tags.Name    
-  - key: tags.task
-keyed_groups:
-  - key: tags
-    prefix: tag
-  - prefix: instance_type
-    key: instance_type
-filters:
-  instance-state-name : running
-compose:
-  ansible_host: public_ip_address    
+#   - key: tags.Name    
+#   - key: tags.task
+# keyed_groups:
+#   - key: tags
+#     prefix: tag
+#   - prefix: instance_type
+#     key: instance_type
+# filters:
+#   instance-state-name : running
+# compose:
+#   ansible_host: public_ip_address    
