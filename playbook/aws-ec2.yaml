@@ -53,4 +53,10 @@
            Name: dbserver1
            Env: web
 
-
+- name: Add web servers to inventory
+  add_host:
+    name: '{{ ip_from_ec2 }}'
+    hostname: '{{ item.public_ip }}'
+    privateip: '{{ item.private_ip }}'
+    groups: web_servers
+    foo: 42
