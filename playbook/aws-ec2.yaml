@@ -16,7 +16,7 @@
          instance_tags:
            Name: webserver1
            Env: web
-        #  register: ec2
+       register: ec2
 
  - name: WEB AWS EC2 Instance
    hosts: localhost
@@ -35,7 +35,7 @@
          instance_tags:
            Name: webserver2
            Env: web
-        #  register: ec2
+       register: ec2
 
  - name: DB AWS EC2 Instance
    hosts: localhost
@@ -54,7 +54,7 @@
          instance_tags:
            Name: dbserver1
            Env: db
-        #  register: ec2
+       register: ec2
 
   # - name: Add new instance to host group
   #   add_host:
