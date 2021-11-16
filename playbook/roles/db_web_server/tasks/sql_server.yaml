@@ -1,45 +1,45 @@
-  - name:  Install MySQL database
-    become: Yes
-    become_method: sudo
-    become_user: root
-    yum: 
-      name: 
-        - mysql
-      state: installed
+- name:  InstallMySQLdatabase
+  become: Yes
+  become_method: sudo
+  become_user: root
+  yum: 
+    name: 
+      - mysql
+    state: installed
 
-  - name: Install MySQL-server database
-    become: Yes
-    become_method: sudo
-    become_user: root
-    dnf:
-      name:
-       - mysql-server
-      state: installed
-    
-  - name:  Start MySql Service
-    become: Yes
-    become_method: sudo
-    become_user: root
-    service: 
-      name: mysqld
-      state: started      
-      enabled: yes
+- name: Install MySQL-server database
+  become: Yes
+  become_method: sudo
+  become_user: root
+  dnf:
+    name:
+      - mysql-server
+    state: installed
+  
+- name:  Start MySql Service
+  become: Yes
+  become_method: sudo
+  become_user: root
+  service: 
+    name: mysqld
+    state: started      
+    enabled: yes
 
-  - name:  Create application database
-    become: Yes
-    become_method: sudo
-    become_user: root
-    mysql_db: 
-     name: employee_db 
-     state: present
+- name:  Create application database
+  become: Yes
+  become_method: sudo
+  become_user: root
+  mysql_db: 
+    name: employee_db
+    state: present
 
-  - name: Create Database user
-    become: Yes
-    become_method: sudo
-    become_user: root
-    mysql_user: 
-      name: db_user
-      password: adam1234
-      priv: '*.*:ALL,GRANT'
-      state: present
-      host: '%'
+- name: Create Database user
+  become: Yes
+  become_method: sudo
+  become_user: root
+  mysql_user: 
+    name: db_user
+    password: adam1234
+    priv: '*.*:ALL,GRANT'
+    state: present
+    host: '%'

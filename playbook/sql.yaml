@@ -1,0 +1,9 @@
+---
+
+- name: Deploy dependency
+  hosts: awsdbserver
+  gather_facts: false
+  roles:
+    - {role: db_web_server, tags: ['python'],   db_web_server: python }
+    - {role: db_web_server, tags: ['sql'],      db_web_server: sql_server }
+

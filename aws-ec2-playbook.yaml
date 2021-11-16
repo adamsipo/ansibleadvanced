@@ -1,0 +1,145 @@
+---
+  - name: AWS EC2 Instance
+    hosts: localhost
+    connection: local
+    gather_facts: false
+    tasks:
+      - name: Create ec2 instance
+        ec2:
+          instance_type: t2.micro
+          image: ami-06ec8443c2a35b0ba
+          exact_count: 1
+          count_tag:
+            Name: "web_server_1"
+          key_name: ansible
+          group: all-allow
+          wait: yes
+          region: eu-central-1
+          instance_tags:
+            Name: "web_server_1"
+            Env: web
+        register: ec2
+
+      - name: Add new instance to host group
+        add_host:
+          hostname: "{{ item.public_ip }}"   
+          ansible_host: "{{ item.public_ip }}"   
+          groups: awswebserver  #Group name where instance will belong
+          ansible_ssh_private_key_file: '/home/osboxes/.ssh/ansible.pem'
+          ansible_ssh_user: ec2-user   #User name that will be used while connecting   
+        loop: "{{ ec2.tagged_instances }}"   #Loop to add all the newly created instances
+
+      - name: Display result
+        debug:
+          msg: 
+            - "{{ groups }}"
+
+      # - name: Wait for SSH to come up
+      #   wait_for: 
+      #     host: "{{ item.public_ip }}" 
+      #     port: 22 
+      #     state: started
+      #   with_items: "{{ ec2.instances }}"         
+
+      - name: Create ec2 instance
+        ec2:
+          instance_type: t2.micro
+          image: ami-06ec8443c2a35b0ba
+          exact_count: 1
+          count_tag:
+            Name: "web_server_2"
+          key_name: ansible
+          group: all-allow
+          wait: yes
+          region: eu-central-1
+          instance_tags:
+            Name: "web_server_2"
+            Env: web
+        register: ec2
+
+      - name: Add new instance to host group
+        add_host:
+          hostname: "{{ item.public_ip }}"   
+          ansible_host: "{{ item.public_ip }}"   
+          groups: awswebserver  #Group name where instance will belong
+          ansible_ssh_private_key_file: '/home/osboxes/.ssh/ansible.pem'
+          ansible_ssh_user: ec2-user   #User name that will be used while connecting   
+        loop: "{{ ec2.tagged_instances }}"   #Loop to add all the newly created instances
+
+      - name: Display result
+        debug:
+          msg: 
+            - "{{ groups }}"
+
+      # - name: Wait for SSH to come up
+      #   wait_for: 
+      #     host: "{{ item.public_ip }}" 
+      #     port: 22 
+      #     state: started
+      #   with_items: "{{ ec2.instances }}"         
+
+      # - name: Display result
+      #   debug:
+      #     msg: 
+      #       - "{{ groups }}"
+      #       - "{{ result }}"
+
+      - name: Create ec2 DB instance
+        ec2:
+          instance_type: t2.micro
+          image: ami-06ec8443c2a35b0ba
+          exact_count: 1
+          count_tag:
+            Name: "db_server_1"
+          key_name: ansible
+          group: all-allow
+          wait: yes
+          region: eu-central-1
+          instance_tags:
+            Name: "db_server_1"
+            Env: db
+        register: ec2
+
+      - name: Add new instance to host group
+        add_host:
+          hostname: "{{ item.public_ip }}"   
+          ansible_host: "{{ item.public_ip }}"   
+          groups: awsdbserver  #Group name where instance will belong
+          ansible_ssh_private_key_file: '/home/osboxes/.ssh/ansible.pem'
+          ansible_ssh_user: ec2-user   #User name that will be used while connecting   
+        loop: "{{ ec2.tagged_instances }}"   #Loop to add all the newly created instances
+
+      - name: Display result
+        debug:
+          msg: 
+            - "{{ groups }}"
+
+      # - name: Create ec2 DB instance
+      #   ec2:
+      #     instance_type: t2.micro
+      #     image: ami-06ec8443c2a35b0ba
+      #     count: 1
+      #     key_name: ansible
+      #     group: all-allow
+      #     wait: yes
+      #     region: eu-central-1
+      #     instance_tags:
+      #       Name: dbserver1
+      #       Env: db
+      #   register: ec2
+
+      # - name: Add new instance to host group
+      #   add_host:
+      #     hostname: "{{ item.public_ip }}"   
+      #     ansible_host: "{{ item.public_ip }}"   
+      #     groups: awsdbserver  #Group name where instance will belong
+      #     ansible_ssh_private_key_file: '/home/osboxes/.ssh/ansible.pem'
+      #     ansible_ssh_user: ec2-user   #User name that will be used while connecting
+      #   loop: "{{ ec2.instances }}"   #Loop to add all the newly created instances
+
+      # - name: Wait for SSH to come up
+      #   wait_for: 
+      #     host: "{{ item.public_ip }}" 
+      #     port: 22 
+      #     state: started
+      #   with_items: "{{ ec2.instances }}"

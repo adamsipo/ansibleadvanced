@@ -1,11 +1,9 @@
 ---
 
 - name: Deploy dependency
-  hosts: webserver,dbserver
+  hosts: awswebserver
   gather_facts: false
   roles:
-    - {role: db_web_server, tags: ['aws'],      db_web_server: aws-ec2 }
     - {role: db_web_server, tags: ['python'],   db_web_server: python }
-    - {role: db_web_server, tags: ['sql'],      db_web_server: sql_server }
     - {role: db_web_server, tags: ['web'],      db_web_server: flask_web }
 

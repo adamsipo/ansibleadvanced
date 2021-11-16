@@ -1,0 +1,8 @@
+- name: Setup Database Server
+  hosts: awsdbserver
+  become: yes
+  become_method: sudo
+  connection: ssh
+  tasks:
+    - name: ping
+      ping:

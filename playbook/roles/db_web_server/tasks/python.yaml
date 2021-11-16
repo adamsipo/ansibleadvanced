@@ -1,11 +1,21 @@
-  - name:  Install all required dependencies
-    become: Yes
-    become_method: sudo
-    become_user: root
-    yum: 
-      name: 
-      - python3-pip
-      - python3-wheel
-      - python3-devel
-      - "@Development tools"
-      state: installed
+- name:  Install-all-required-dependencies
+  become: true
+  become_method: sudo
+  become_user: root
+  yum:
+    name:
+    - python3-pip
+    - python3-wheel
+    - python3-devel
+    - "@Development tools"
+    state: installed
+
+- name: Install python Flask dependency
+  become: true
+  become_method: sudo
+  become_user: root
+  pip:
+    name:
+      - PyMySQL
+    state: present
+    extra_args: -q
