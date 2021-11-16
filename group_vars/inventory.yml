@@ -1,0 +1,21 @@
+---
+all:
+  hosts: localhost
+  vars:
+    service_account_email: adam.sipos.work@gmail.com
+    credentials_file: udemy-ansible-assignment-fb21ec2e17c4.json
+    project_id: ansible-course
+    image: ami-06ec8443c2a35b0ba
+    instance_type: t2.micro
+    group: all-allow
+    region: eu-central-1
+    instance_list:
+      - "web_server_1"
+      - "web_server_2"
+      - "db-server"
+    ansible_ssh_private_key_file: '/home/osboxes/.ssh/ansible.pem'
+    ansible_ssh_user: ec2-user
+    lb_members: us-central1-a/web-server-1,us-central1-a/web-server-2
+    db_name: employee_db
+    db_user: db_user
+    db_user_password: Passw0rd
