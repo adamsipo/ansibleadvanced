@@ -6,7 +6,6 @@
     name:
       - Flask
       - Flask-MySQL
-      - PyMySQL
     state: present
     extra_args: -q
 
@@ -19,17 +18,19 @@
     dest: /opt/application
     version: master
 
-# - name: Open-ports 5000
-#   become: true
-#   become_method: sudo
-#   become_user: root
-#   shell: firewall-cmd --zone=public --permanent --add-port 5000/tcp >> log1.txt
+- name: Start web server
+  become: true
+  become_method: sudo
+  become_user: root
+  shell: MYSQL_DATABASE_HOST="{{ hostvars[groups['awsdbserver'][0]]['ansible_host'] }}" FLASK_APP=/opt/application/app.py nohup /usr/local/bin/flask run --host=0.0.0.0 --port=80 & 
+  changed_when: true
 
-# - name: Open-ports 5000
-#   become: true
-#   become_method: sudo
-#   become_user: root
-#   shell: firewall-cmd --reload >> log2.txt
-
-- name: Start->web server
-  shell: FLASK_APP=/opt/application/app.py nohup flask run --host=0.0.0.0 &
+- name: Send notification email
+  mail:
+    host: smtp.gmail.com
+    port: 465
+    username: test_adam_test@gmail.com
+    password: "{{ g_password }}"
+    to: Test Adam Test <test_adam_test@gmail.com>
+    subject: Ansible-report
+    body: 'Yay its done.'

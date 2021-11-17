@@ -1,4 +1,4 @@
-- include: aws-ec2-playbook.yaml
+- include: playbook/aws-ec2.yaml
 - include: playbook/sql.yaml
 - include: playbook/flask.yaml
-
+- include: playbook/elb.yaml

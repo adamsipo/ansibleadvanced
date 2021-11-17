@@ -1,0 +1,79 @@
+---
+- name: AWS ELB security group
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Gather information about all ELBs
+      ec2_instance_info:
+        filters:
+          "tag:Type": Webserver
+          # availability-zone: eu-central-1b
+          instance-state-name: ["running"]
+        region: eu-central-1
+      register: elb_info
+    - name: Display result
+      debug:
+        msg:
+          - "{{ elb_info.instances[0].instance_id }}"
+      loop: "{{ elb_info.instances }}"
+      loop_control:
+        label: "{{ elb_info.instances[0].instance_id }}"
+
+    - name: Create simple security group
+      ec2_group:
+        name: webservers
+        description: A security group for my current IP
+        region: eu-central-1
+        rules:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: "0.0.0.0/0"
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_ip: "0.0.0.0/0"
+        rules_egress:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
+      register: webservers_group
+
+    - name: Create the ELB only listening over port 80
+      ec2_elb_lb:
+        name: ansibleLB
+        state: present
+        region: eu-central-1
+        zones:
+          - eu-central-1a
+          - eu-central-1b
+          - eu-central-1c
+        listeners:
+          - protocol: http
+            load_balancer_port: 80
+            instance_port: 80
+        health_check:
+          ping_protocol: http  # options are http, https, ssl, tcp
+          ping_port: 80
+          ping_path: "/"  # not required for tcp or ssl
+          response_timeout: 5  # seconds
+          interval: 30  # seconds
+          unhealthy_threshold: 2
+          healthy_threshold: 10
+      register: elb
+
+    - name: Add each EC2 instance to the ELB
+      ec2_elb:
+        state: present
+        ec2_elbs: ansibleLB
+        region: eu-central-1
+        instance_id: "{{ elb_info.instances[0].instance_id }}"
+      with_items:
+        - "{{ elb_info.instances[0].instance_id }}"
+        - "{{ elb_info.instances[1].instance_id }}"
+      loop_control:
+        label:
+          - "{{ elb_info.instances[0].instance_id }}"
+          - "{{ elb_info.instances[1].instance_id }}"

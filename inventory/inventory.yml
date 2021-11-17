@@ -9,10 +9,11 @@ all:
     instance_type: t2.micro
     group: all-allow
     region: eu-central-1
-    instance_list:
-      - "web_server_1"
-      - "web_server_2"
-      - "db-server"
+    webservers:
+      - web_server_1
+      - web_server_2
+    dbservers:
+      - db-server
     ansible_ssh_private_key_file: '/home/osboxes/.ssh/ansible.pem'
     ansible_ssh_user: ec2-user
     lb_members: us-central1-a/web-server-1,us-central1-a/web-server-2

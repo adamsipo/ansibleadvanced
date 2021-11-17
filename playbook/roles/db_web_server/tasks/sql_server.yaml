@@ -1,45 +1,57 @@
-- name:  InstallMySQLdatabase
-  become: Yes
+- name: InstallMySQLdatabase
+  become: true
   become_method: sudo
   become_user: root
-  yum: 
-    name: 
+  yum:
+    name:
       - mysql
     state: installed
 
 - name: Install MySQL-server database
-  become: Yes
+  become: true
   become_method: sudo
   become_user: root
   dnf:
     name:
       - mysql-server
     state: installed
-  
-- name:  Start MySql Service
-  become: Yes
-  become_method: sudo
-  become_user: root
-  service: 
-    name: mysqld
-    state: started      
-    enabled: yes
 
-- name:  Create application database
-  become: Yes
+- name: Update MySQL Configuration file
+  become: true
   become_method: sudo
   become_user: root
-  mysql_db: 
-    name: employee_db
+  ini_file:
+    mode: 0644
+    path: /etc/mysql/my.cnf
+    section: mysqld
+    option: bind-address
+    value: 0.0.0.0
+
+
+- name: Start MySql Service
+  become: true
+  become_method: sudo
+  become_user: root
+  service:
+    name: mysqld
+    state: started
+    enabled: true
+
+- name: Create application database
+  become: true
+  become_method: sudo
+  become_user: root
+  mysql_db:
+    name: "{{ db_name }}"
     state: present
 
 - name: Create Database user
-  become: Yes
+  become: true
   become_method: sudo
   become_user: root
-  mysql_user: 
-    name: db_user
-    password: adam1234
+  mysql_user:
+    name: "{{ db_user }}"
+    password: "{{ db_user_password }}"
     priv: '*.*:ALL,GRANT'
     state: present
     host: '%'
