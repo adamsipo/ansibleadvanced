@@ -1,0 +1,57 @@
+- name: InstallMySQLdatabase
+  become: true
+  become_method: sudo
+  become_user: root
+  yum:
+    name:
+      - mysql
+    state: installed
+
+- name: Install MySQL-server database
+  become: true
+  become_method: sudo
+  become_user: root
+  dnf:
+    name:
+      - mysql-server
+    state: installed
+
+- name: Update MySQL Configuration file
+  become: true
+  become_method: sudo
+  become_user: root
+  ini_file:
+    mode: 0644
+    path: /etc/mysql/my.cnf
+    section: mysqld
+    option: bind-address
+    value: 0.0.0.0
+
+
+- name: Start MySql Service
+  become: true
+  become_method: sudo
+  become_user: root
+  service:
+    name: mysqld
+    state: started
+    enabled: true
+
+- name: Create application database
+  become: true
+  become_method: sudo
+  become_user: root
+  mysql_db:
+    name: "{{ db_name }}"
+    state: present
+
+- name: Create Database user
+  become: true
+  become_method: sudo
+  become_user: root
+  mysql_user:
+    name: "{{ db_user }}"
+    password: "{{ db_user_password }}"
+    priv: '*.*:ALL,GRANT'
+    state: present
+    host: '%'

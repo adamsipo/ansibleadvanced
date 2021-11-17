@@ -1,0 +1,36 @@
+- name: InstallpythonFlaskdependency
+  become: true
+  become_method: sudo
+  become_user: root
+  pip:
+    name:
+      - Flask
+      - Flask-MySQL
+    state: present
+    extra_args: -q
+
+- name: Example clone of a single branch
+  become: true
+  become_method: sudo
+  become_user: root
+  ansible.builtin.git:
+    repo: https://github.com/mmumshad/simple-webapp.git
+    dest: /opt/application
+    version: master
+
+- name: Start web server
+  become: true
+  become_method: sudo
+  become_user: root
+  shell: MYSQL_DATABASE_HOST="{{ hostvars[groups['awsdbserver'][0]]['ansible_host'] }}" FLASK_APP=/opt/application/app.py nohup /usr/local/bin/flask run --host=0.0.0.0 --port=80 & 
+  changed_when: true
+
+- name: Send notification email
+  mail:
+    host: smtp.gmail.com
+    port: 465
+    username: test_adam_test@gmail.com
+    password: "{{ g_password }}"
+    to: Test Adam Test <test_adam_test@gmail.com>
+    subject: Ansible-report
+    body: 'Yay its done.'
